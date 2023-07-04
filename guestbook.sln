@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33815.320
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "guestbook", "guestbook\guestbook.csproj", "{F6295BAB-F51A-47CB-9FB8-4019FA93FAF1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F6295BAB-F51A-47CB-9FB8-4019FA93FAF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6295BAB-F51A-47CB-9FB8-4019FA93FAF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6295BAB-F51A-47CB-9FB8-4019FA93FAF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6295BAB-F51A-47CB-9FB8-4019FA93FAF1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4F47E783-3BF6-4CD8-A912-0179F61A970F}
+	EndGlobalSection
+EndGlobal
