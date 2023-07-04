@@ -1,0 +1,107 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    var data = ViewBag.guests;
+    var pageCount = ViewBag.pageCount;
+    var pageNumber = ViewBag.pageNumber;
+    var languages = ViewBag.languages;
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+<div class="dropdown">
+    <button class="btn btn-success dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Select Language
+    </button>
+    <ul class="dropdown-menu"> @*filter by languages*@
+        @foreach (var x in languages)
+        {
+            <li><a class="dropdown-item" href='@Url.Action("ChangeLanguage", "Home", new { language = @x })'>@x</a></li>
+        }
+    </ul>
+</div>
+<br />
+<div d-flex align-items-end>
+    <nav aria-label="Page navigation example"> @*pagination*@
+        <ul class="pagination">
+            @if(pageNumber > 1)
+            {
+                <li class="page-item"><a class="page-link" href=@Url.Action("Index", "Home", new { pagNumber = (pageNumber -1) })>Previous</a></li>
+            }
+            @for (var i = 1; i < pageCount+1; i++)
+            {
+                <li class="page-item"><a class="page-link" href=@Url.Action("Index", "Home", new { pagNumber = @i })>@i</a></li> 
+            }
+            @if (pageNumber < pageCount)
+            {
+                <li class="page-item"><a class="page-link" href=@Url.Action("Index", "Home", new { pagNumber = (pageNumber+1) })>Next</a></li>
+            }
+        </ul>
+    </nav>
+</div>
+<div class="text-center d-flex flex-wrap">
+    @if (data.Count < 6)
+    {
+        @foreach (var x in data)@*creates each guest card*@
+        {
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h4>@x.name</h4>
+                    <p>@x.email</p>
+                    <p>@x.date</p>
+                    <hr />
+                    @if (x.comment.Length < 100)
+                    {
+                        <p>@x.comment</p>
+                    }
+                    else
+                    @*if comment requires a show more*@
+                    {
+                        <p>@x.comment.Substring(0, 100)</p>
+                        <button class="btn btn-info" onclick="location.href='@Url.Action("ShowMore", "Home", new { name = x.name, email = x.email, date = x.date, comment = x.comment, pagNumber = pageNumber})'">Show More</button>
+                    }
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        @for (var i = 0; i < 6; i++)
+        {
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h4>@data[i].name</h4>
+                    <p>@data[i].email</p>
+                    <p>@data[i].date</p>
+                    <hr />
+                    @if (data[i].comment.Length < 100)
+                    {
+                        <p>@data[i].comment</p>
+                    }
+                    else @*if comment requires a show more*@
+                    {
+                        <p>@data[i].comment.Substring(0, 100)</p>
+                        <button class="btn btn-info" onclick="location.href='@Url.Action("ShowMore", "Home", new { name = data[i].name, email = data[i].email, date = data[i].date, comment = data[i].comment, pagNumber = pageNumber})'">Show More</button>
+                    }
+                </div>
+            </div>
+        }
+    }
+</div>
+
+<div d-flex align-items-end> @*Pagination*@
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            @if (pageNumber > 1) 
+            {
+                <li class="page-item"><a class="page-link" href=@Url.Action("Index", "Home", new { pagNumber = (pageNumber -1) })>Previous</a></li>
+            }
+            @for (var i = 1; i < pageCount + 1; i++)
+            {
+                <li class="page-item"><a class="page-link" href=@Url.Action("Index", "Home", new { pagNumber = @i })>@i</a></li>
+            }
+            @if (pageNumber < pageCount)
+            {
+                <li class="page-item"><a class="page-link" href=@Url.Action("Index", "Home", new { pagNumber = (pageNumber+1) })>Next</a></li>
+            }
+        </ul>
+    </nav>
+</div>

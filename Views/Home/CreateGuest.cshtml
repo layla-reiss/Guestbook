@@ -1,0 +1,114 @@
+﻿@model guestbook.Models.guest
+
+@{
+    ViewData["Title"] = "CreateGuest";
+    var data = ViewBag.Message;
+    var date = DateTime.Now;
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+<h1>Hello!</h1> @*Hi :)*@
+
+<hr /> @*Preview Modal*@
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Your Name</h5>
+                <button type="button" class="close" data-dismiss="modal" id="otherCloseButton" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="preEmail">Your Email</p>
+                <p id="preDate">The Date</p>
+                <hr/>
+                <p id="preComment"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        @if (data == "denied") @*Checks if guest was already added*@
+        {
+            <div class="alert alert-danger" role="alert">
+                Sorry, your email is already in use by another guest, please try again
+            </div>
+        }
+        else if (data == "approved")
+        {
+            <div class="alert alert-success" role="alert">
+                Your credentials were added successfully!
+            </div>
+        }
+        <form asp-action="ValidateGuest"> @*ValidateGuest was the old action*@
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="name"  class="control-label"></label>
+                <input asp-for="name" id="userName" class="form-control" />
+                <span asp-validation-for="name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="email" class="control-label"></label>
+                <input asp-for="email" id="userEmail" class="form-control" />
+                <span asp-validation-for="email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="date" class="control-label"></label>
+                <input readonly asp-for="date" id="userDate" class="form-control" value=@date/>
+                <span asp-validation-for="date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="comment" class="control-label"></label>
+                <input asp-for="comment" id="userComment" class="form-control" />
+                <span asp-validation-for="comment" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="language" class="control-label"></label>
+                <input asp-for="language" class="form-control">
+                <span asp-validation-for="language" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="image" class="control-label"></label>
+                <input type="file" accept="image/png, image/jpeg" asp-for="image" class="form-control">
+                <span asp-validation-for="image" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save changes" class="btn btn-success" />
+                <button type="button" id="previewButton" onclick=preparePreview() class="btn btn-warning" data-toggle="modal" data-target="#exampleModal">
+                    Preview Post
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@*---jQuery for preview modal---
+*@<script>
+    $("#otherCloseButton").on("click", function () {
+        $("#exampleModal").modal("toggle");
+    });
+
+    function preparePreview()
+    {
+        var name = document.getElementById("userName").value;
+        var email = document.getElementById("userEmail").value;
+        var date = document.getElementById("userDate").value;
+        var comment = document.getElementById("userComment").value;
+        if (comment.length > 100)
+        {
+            comment = comment.slice(0, 100);
+        }
+        document.getElementById("exampleModalLabel").innerText = name;
+        document.getElementById("preEmail").innerText = email;
+        document.getElementById("preDate").innerText = date;
+        document.getElementById("preComment").innerText = comment;
+        $("#exampleModal").modal("show");
+    }
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

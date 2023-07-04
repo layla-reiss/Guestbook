@@ -1,0 +1,13 @@
+﻿@{
+    var name = ViewBag.name;
+    var email = ViewBag.email;
+    var date = ViewBag.date;
+    var comment = ViewBag.comment;
+    var pageNumber = ViewBag.pageNumber;
+}
+<button type="button" class="btn btn-danger" onclick="location.href='@Url.Action("Index", "Home", new { pagNumber = (pageNumber)})'">Back to guestbook</button>
+<h3>@name</h3>
+<h6>@email</h6>
+<h6>@date</h6>
+<hr/>
+<p>@comment</p>
