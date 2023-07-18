@@ -1,0 +1,1 @@
+Ok so this is about 40% of a project I did on work experience at Cox Automotive. I swear *I swear* it did something, it made a guestbook in C# with a front end created using boostrap but all I could download was the MVC files from it
